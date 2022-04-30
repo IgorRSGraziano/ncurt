@@ -1,15 +1,11 @@
 import Router from "next/router";
 
+import { Title } from "styles/style";
+
 export default function Home() {
-  function mudarUrl(url: string) {
-    window.location.href = url;
-  }
   return (
-    <div>
-      Hello
-      {/* {Router.push('google.com')} */}
-      <p>Olá</p>
-      <button onClick={() => mudarUrl('google.com')}>Mudar URL</button>
-    </div>
-  )
+    <>
+      <Title>nCurt</Title>
+    </>
+  );
 }
