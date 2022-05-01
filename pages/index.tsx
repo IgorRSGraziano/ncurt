@@ -1,11 +1,14 @@
-import Router from "next/router";
-
-import { Title } from "styles/style";
+import Head from "next/head";
 
 export default function Home() {
+  <Head>
+    <title>nCurt</title>
+  </Head>;
+
   return (
     <>
-      <Title>nCurt</Title>
+      <h1>nCurt</h1>
+      <div>Suas URL&apos;s cada vez menores</div>
     </>
   );
 }
