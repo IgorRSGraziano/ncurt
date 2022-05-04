@@ -6,7 +6,6 @@ body {
   cursor: default;
   padding: 0;
   margin: 0;
-  height: 150vh;
   background-color: rgb(0, 30, 60);
   color: white;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
