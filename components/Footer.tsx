@@ -3,7 +3,7 @@ import { StaticContainer, Content } from "styles/style";
 
 function Footer() {
   return (
-    <StaticContainer position="absolute" bottom="0">
+    <StaticContainer position="fixed" bottom="0">
       <Content justifyContentf="center">Feito com ❤️ por Igor</Content>
     </StaticContainer>
   );

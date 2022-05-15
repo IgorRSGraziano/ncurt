@@ -1,9 +1,35 @@
 import React from "react";
-import { StaticContainer, LoginArea, Brand, Content } from "styles/style";
+import styled from "styled-components";
+import { StaticContainer, Content, textColor2, fontSize2 } from "styles/style";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
+
+const LoginArea = styled.a`
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: nowrap;
+  transition: 0.3s;
+  cursor: pointer;
+
+  &:hover {
+    transition: 0.3s;
+    color: ${textColor2};
+  }
+`;
+
+const Brand = styled.div`
+  font-size: ${fontSize2};
+  font-weight: bold;
+  transition: 0.3s;
+
+  &:hover {
+    transition: 0.3s;
+    color: ${textColor2};
+  }
+`;
 
 const isLogged = true;
 
