@@ -5,9 +5,11 @@ import styled from "styled-components";
 import { textColor1, textColor2, rem } from "styles/style";
 
 const URLInput = styled.input`
-  width: 500px;
+  max-width: 500px;
   height: 40px;
   border-radius: 5px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
   background-color: rgb(19, 47, 76);
   border: 1px solid rgb(38, 93, 151);
   color: rgb(178, 186, 194);
@@ -46,6 +48,27 @@ const HomeStyle = styled.div`
   align-items: center;
 `;
 
+const InputContainer = styled.div`
+  display: flex;
+`;
+
+const BtnGerarURL = styled.button`
+  border: 1px solid rgb(38, 93, 151);
+  border-left: 0px;
+  background-color: rgb(0, 127, 255);
+  color: ${textColor2};
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+
+  &:hover {
+    background-color: #0059b2;
+    transition: 0.3s;
+  }
+`;
+
 export default function Home() {
   <Head>
     <title>nCurt</title>
@@ -59,11 +82,14 @@ export default function Home() {
         <p>
           <label htmlFor="url">Digite a URL que deseja encurtar.</label>
         </p>
-        <URLInput
-          type={"text"}
-          placeholder="https://www.site.com.br"
-          id="url"
-        />
+        <InputContainer>
+          <URLInput
+            type={"text"}
+            placeholder="https://www.site.com.br"
+            id="url"
+          />
+          <BtnGerarURL>Gerar</BtnGerarURL>
+        </InputContainer>
       </CollumAlign>
     </HomeStyle>
   );
