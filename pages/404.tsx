@@ -35,7 +35,6 @@ function NotFound() {
 
   return (
     <NotFoundContainer>
-      {/* //TODO Adicionar fotos de gatinhos */}
       <NotFoundTitle>404.</NotFoundTitle>
       <h1>Parece que essa não era a página que você estava buscando...</h1>
       {catPic && (

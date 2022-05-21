@@ -28,7 +28,7 @@ export const StaticContainer = styled.header<Props>`
   top: ${(props) => props.top || "unset"};
   bottom: ${(props) => props.bottom || "unset"};
   background-color: rgba(10, 25, 41, 0.72);
-  padding: 10px 0px;
+  padding: 10px 10px;
   width: 100%;
 `;
 

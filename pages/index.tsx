@@ -6,7 +6,8 @@ import { textColor1, textColor2, rem } from "styles/style";
 
 const URLInput = styled.input`
   max-width: 500px;
-  height: 40px;
+  width: 100%;
+  height: 100%;
   border-radius: 5px;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
@@ -39,6 +40,9 @@ const URLInput = styled.input`
 const CollumAlign = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 `;
 
 const HomeStyle = styled.div`
@@ -46,15 +50,21 @@ const HomeStyle = styled.div`
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  padding: 10px;
 `;
 
 const InputContainer = styled.div`
   display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 40px;
 `;
 
 const BtnGerarURL = styled.button`
   border: 1px solid rgb(38, 93, 151);
   border-left: 0px;
+  height: 100%;
   background-color: rgb(0, 127, 255);
   color: ${textColor2};
   border-top-right-radius: 5px;
@@ -69,6 +79,15 @@ const BtnGerarURL = styled.button`
   }
 `;
 
+const Small = styled.small`
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 30px;
+`;
+
+const H1 = styled.h1`
+  text-align: center;
+`;
+
 export default function Home() {
   <Head>
     <title>nCurt</title>
@@ -76,7 +95,7 @@ export default function Home() {
 
   return (
     <HomeStyle>
-      <h1>nCurt, o seu encurtador de URL's</h1>
+      <H1>nCurt, o seu encurtador de URL's</H1>
 
       <CollumAlign>
         <p>
@@ -87,6 +106,21 @@ export default function Home() {
             type={"text"}
             placeholder="https://www.site.com.br"
             id="url"
+          />
+          <BtnGerarURL>Gerar</BtnGerarURL>
+        </InputContainer>
+        <Small>
+          Você pode enviar uma lista de URL's passando um ";" entre elas
+        </Small>
+
+        <p>
+          <label htmlFor="urlVerify">Deseja saber aonde uma URL leva?</label>
+        </p>
+        <InputContainer>
+          <URLInput
+            type={"text"}
+            placeholder="https://www.site.com.br"
+            id="urlVerify"
           />
           <BtnGerarURL>Gerar</BtnGerarURL>
         </InputContainer>
