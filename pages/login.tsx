@@ -1,13 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 import { loginDb } from "services/LoginService";
-import { rem } from "styles/style";
+import { rem, Button } from "styles/style";
 
 const Title = styled.h1`
   font-size: ${rem(50)};
 `;
 
-const LoginForm = styled.form`
+const LoginForm = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -39,33 +39,6 @@ const InputField = styled.div`
   margin: 10px 0;
 `;
 
-const Button1 = styled.button`
-  width: 100%;
-  border: 1px solid rgb(38, 93, 151);
-  border-left: 0px;
-  background-color: rgb(0, 127, 255);
-  color: rgb(0, 30, 60);
-  padding: 10px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: 0.3s;
-  margin: 10px 0;
-`;
-
-const Button2 = styled.button`
-  width: 100%;
-  border: 1px solid rgb(38, 93, 151);
-  border-left: 0px;
-  color: rgb(0, 127, 255);
-  border: rgb(0, 127, 255) 3px solid;
-  background-color: rgb(0, 30, 60);
-  padding: 10px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: 0.3s;
-`;
 function login() {
   const [isSignup, setIsSignup] = React.useState<Boolean>(false);
 
@@ -76,26 +49,22 @@ function login() {
         {!isSignup && (
           <InputField>
             <Label htmlFor="senha">Nome</Label>
-            <Input type="text" required />
+            <Input type="text" />
           </InputField>
         )}
         <InputField>
           <Label htmlFor="email">E-Mail</Label>
-          <Input type="email" required />
+          <Input type="email" />
         </InputField>
         <InputField>
           <Label htmlFor="senha">Senha</Label>
-          <Input type="password" required />
+          <Input type="password" />
         </InputField>
-        <Button1
-          onClick={(e) => {
-            e.preventDefault;
-            setIsSignup(!isSignup);
-          }}
-        >
+        <Button highlight={true}>{isSignup ? "Entrar" : "Criar conta"}</Button>
+        <Button highlight={false} onClick={() => setIsSignup(!isSignup)}>
           {isSignup ? "Não possui conta?" : "Já possui conta?"}
-        </Button1>
-        <Button2>{isSignup ? "Criar conta" : "Entrar"}</Button2>
+        </Button>
+        {isSignup && <Button highlight={false}>Esqueceu sua senha?</Button>}
       </LoginForm>
     </main>
   );
