@@ -1,5 +1,5 @@
 import Head from "next/head";
-
+import React from "react";
 import styled from "styled-components";
 
 import { textColor1, textColor2, rem } from "styles/style";
@@ -88,7 +88,32 @@ const H1 = styled.h1`
   text-align: center;
 `;
 
-export default function Home() {
+const Home: React.FC = () => {
+  //Status from default URL generate
+  const [status, setStatus] = React.useState<string>(null);
+
+  const generateUrl = async (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    try {
+      const body = {
+        destiny: "https://www.google.com",
+      };
+
+      const response = await fetch("/api/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+
+      const responseJson = await response.json();
+
+      setStatus(responseJson.status);
+    } catch (e) {
+      console.log(e);
+      setStatus("Algo de errado não deu certo...");
+    }
+  };
+
   <Head>
     <title>nCurt</title>
   </Head>;
@@ -107,7 +132,7 @@ export default function Home() {
             placeholder="https://www.site.com.br"
             id="url"
           />
-          <BtnGerarURL>Gerar</BtnGerarURL>
+          <BtnGerarURL onClick={generateUrl}>Gerar</BtnGerarURL>
         </InputContainer>
         <Small>
           Você pode enviar uma lista de URL's passando um ";" entre elas
@@ -127,4 +152,6 @@ export default function Home() {
       </CollumAlign>
     </HomeStyle>
   );
-}
+};
+
+export default Home;

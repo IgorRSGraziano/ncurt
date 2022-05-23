@@ -10,12 +10,12 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model URLs {
-  id       String     @id @default(cuid())
-  url      String     @unique
+model Urls {
+  id        String     @id @default(cuid())
+  url       String     @unique
   destiny   String
   content   String?
-  createAt  DateTime
+  createAt  DateTime  @default(now())
   expireAt  DateTime?
   author    User?     @relation(fields: [authorId], references: [id])
   authorId  String?
@@ -28,6 +28,6 @@ model User {
   password      String
   createdAt     DateTime  @default(now()) @map(name: "created_at")
   updatedAt     DateTime  @updatedAt @map(name: "updated_at")
-  urls         URLs[]
+  urls         Urls[]
   @@map(name: "users")
 }
