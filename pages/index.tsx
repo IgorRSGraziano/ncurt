@@ -92,11 +92,13 @@ const Home: React.FC = () => {
   //Status from default URL generate
   const [status, setStatus] = React.useState<string>(null);
 
+  const defaultUrl = React.useRef(null);
+
   const generateUrl = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     try {
       const body = {
-        destiny: "https://www.google.com",
+        destiny: defaultUrl.current.value,
       };
 
       const response = await fetch("/api/generate", {
@@ -131,6 +133,7 @@ const Home: React.FC = () => {
             type={"text"}
             placeholder="https://www.site.com.br"
             id="url"
+            ref={defaultUrl}
           />
           <BtnGerarURL onClick={generateUrl}>Gerar</BtnGerarURL>
         </InputContainer>

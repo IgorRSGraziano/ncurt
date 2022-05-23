@@ -6,7 +6,7 @@ export default async function handle(req, res) {
 
   //Return the last generated URL
   const lastUrl =
-    await prisma.$queryRaw`SELECT url FROM "Urls" ORDER BY created_at DESC LIMIT 1`;
+    await prisma.$queryRaw`SELECT url FROM "Urls" ORDER BY "createAt" DESC LIMIT 1`;
 
   const result = await prisma.urls.create({
     data: {
