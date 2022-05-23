@@ -14,6 +14,6 @@ export default function nextUrl(str) {
   } else if (c >= 97 && c < 122) {
     return s(c + 1);
   } else {
-    return s(48);
+    return str + s(48);
   }
 }
