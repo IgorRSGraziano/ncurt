@@ -3,16 +3,16 @@ import alphanumericIncrement from "utils/alphanumericIncrement";
 
 export default async function handle(req, res) {
   const { destiny } = req.body;
-  // const lastUrl = await prisma.$queryRaw`SELECT * FROM Urls`;
-  const lastUrl = await prisma.$queryRaw`SELECT * FROM Urls`;
-  // const lastUrl =
-  //   await prisma.$queryRaw`SELECT createAt FROM urls ORDER BY TIMESTAMP DESC LIMIT 1`;
+
+  //Return the last generated URL
+  const lastUrl =
+    await prisma.$queryRaw`SELECT url FROM "Urls" ORDER BY created_at DESC LIMIT 1`;
+
   const result = await prisma.urls.create({
     data: {
       destiny: destiny,
-      url: "sddfdfd3fsdd",
+      url: alphanumericIncrement(lastUrl[0].url),
     },
   });
-  console.log(lastUrl);
   res.json(result);
 }
