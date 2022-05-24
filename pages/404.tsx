@@ -26,7 +26,6 @@ function NotFound() {
   async function getCatsPic() {
     const pics = await (await fetch("https://cataas.com/cat?json=true")).json();
     pics.url && setCatPic(`https://cataas.com/${pics.url}`);
-    console.log(pics.url);
   }
 
   React.useEffect(() => {

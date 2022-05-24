@@ -13,11 +13,10 @@ datasource db {
 model Urls {
   id        String     @id @default(cuid())
   url       String     @unique
-  destiny   String
-  content   String?
-  createAt  DateTime  @default(now())
+  destiny   String    
+  createAt  DateTime   @default(now())
   expireAt  DateTime?
-  author    User?     @relation(fields: [authorId], references: [id])
+  author    User?      @relation(fields: [authorId], references: [id])
   authorId  String?
 }
 
