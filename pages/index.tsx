@@ -81,16 +81,23 @@ const BtnGerarURL = styled.button`
 
 const Small = styled.small`
   color: rgba(255, 255, 255, 0.5);
-  margin-bottom: 30px;
+  margin-bottom: 3px;
 `;
 
 const H1 = styled.h1`
   text-align: center;
 `;
 
+const ReturnMessage = styled.small`
+  height: 20px;
+  font-size: ${rem(20)};
+  margin-bottom: 30px;
+`;
+
 const Home: React.FC = () => {
   //Status from default URL generate
   const [status, setStatus] = React.useState<string>(null);
+  console.log(status);
 
   const defaultUrl = React.useRef(null);
 
@@ -109,7 +116,8 @@ const Home: React.FC = () => {
 
       const responseJson = await response.json();
 
-      setStatus(responseJson.status);
+      const message = `Sua url é: ${responseJson.url}`;
+      setStatus(message);
     } catch (e) {
       console.log(e);
       setStatus("Algo de errado não deu certo...");
@@ -140,6 +148,7 @@ const Home: React.FC = () => {
         <Small>
           Você pode enviar uma lista de URL's passando um ";" entre elas
         </Small>
+        <ReturnMessage>{status}</ReturnMessage>
 
         <p>
           <label htmlFor="urlVerify">Deseja saber aonde uma URL leva?</label>
