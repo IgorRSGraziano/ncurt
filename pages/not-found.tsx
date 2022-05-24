@@ -20,18 +20,24 @@ const Small = styled.small`
   color: rgba(255, 255, 255, 0.5);
 `;
 
-function NotFound() {
-  const [catPic, setCatPic] = React.useState<string>("");
+export async function getServerSideProps() {
+  let catPic: string;
 
-  async function getCatsPic() {
-    const pics = await (await fetch("https://cataas.com/cat?json=true")).json();
-    pics.url && setCatPic(`https://cataas.com/${pics.url}`);
-  }
+  const pics = await (await fetch("https://cataas.com/cat?json=true")).json();
+  pics.url ? (catPic = `https://cataas.com/${pics.url}`) : "";
 
-  React.useEffect(() => {
-    getCatsPic();
-  }, []);
+  return {
+    props: {
+      catPic,
+    },
+  };
+}
 
+interface IProps {
+  catPic: string;
+}
+
+const NotFound: React.FC<IProps> = ({ catPic }) => {
   return (
     <NotFoundContainer>
       <NotFoundTitle>404.</NotFoundTitle>
@@ -50,6 +56,6 @@ function NotFound() {
       )}
     </NotFoundContainer>
   );
-}
+};
 
 export default NotFound;

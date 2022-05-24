@@ -13,7 +13,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   return {
     redirect: {
-      destination: redirect?.destiny || "/404",
+      destination: redirect?.destiny || "/not-found",
       permanent: false,
     },
   };
