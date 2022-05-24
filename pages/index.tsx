@@ -97,9 +97,12 @@ const ReturnMessage = styled.small`
 const Home: React.FC = () => {
   //Status from default URL generate
   const [status, setStatus] = React.useState<string>(null);
-  console.log(status);
+
+  //Verify destiny from shorted url
+  const [destinyStatus, setDestinyStatus] = React.useState<string>(null);
 
   const defaultUrl = React.useRef(null);
+  const destinyUrl = React.useRef(null);
 
   const generateUrl = async (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -121,6 +124,34 @@ const Home: React.FC = () => {
     } catch (e) {
       console.log(e);
       setStatus("Algo de errado não deu certo...");
+    }
+  };
+
+  const verifyUrl = async (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    try {
+      const body = {
+        url: destinyUrl.current.value,
+      };
+
+      const response = await fetch("/api/verify", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+
+      const responseJson = await response.json();
+
+      let message;
+      if (responseJson.sucess) {
+        message = `Essa URL leva para: ${responseJson.destiny}`;
+      } else {
+        message = "Não foi encontrado essa URL";
+      }
+      setDestinyStatus(message);
+    } catch (e) {
+      console.log(e);
+      setDestinyStatus("Algo de errado não deu certo...");
     }
   };
 
@@ -158,9 +189,11 @@ const Home: React.FC = () => {
             type={"text"}
             placeholder="https://www.site.com.br"
             id="urlVerify"
+            ref={destinyUrl}
           />
-          <BtnGerarURL>Gerar</BtnGerarURL>
+          <BtnGerarURL onClick={verifyUrl}>Gerar</BtnGerarURL>
         </InputContainer>
+        <ReturnMessage>{destinyStatus}</ReturnMessage>
       </CollumAlign>
     </HomeStyle>
   );
