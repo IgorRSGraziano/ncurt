@@ -47,25 +47,26 @@ function login() {
 
   const checkout = async (e: React.SyntheticEvent) => {
     e.preventDefault();
-    if (!isSignup) {
-      const response = await fetch("/api/account/create", {
+    const response = await fetch(
+      `/api/account/${isSignup ? "login" : "create"}`,
+      {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          name: name.current.value,
-          email: email.current.value,
-          password: password.current.value,
+          name: name.current?.value,
+          email: email.current?.value,
+          password: password.current?.value,
         }),
-      });
-      // const data = await response.json();
-      console.log({
-        name: name.current.value,
-        email: email.current.value,
-        password: password.current.value,
-      });
-    }
+      }
+    );
+    // const data = await response.json();
+    console.log({
+      name: name.current?.value,
+      email: email.current.value,
+      password: password.current?.value,
+    });
   };
 
   return (

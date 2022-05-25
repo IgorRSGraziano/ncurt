@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,22 +8,24 @@ datasource db {
 }
 
 model Urls {
-  id        String     @id @default(cuid())
-  url       String     @unique
-  destiny   String    
-  createAt  DateTime   @default(now())
-  expireAt  DateTime?
-  author    User?      @relation(fields: [authorId], references: [id])
-  authorId  String?
+  id       String    @id @default(cuid())
+  url      String    @unique
+  destiny  String
+  createAt DateTime  @default(now())
+  expireAt DateTime?
+  authorId String?
+  number   Int       @default(autoincrement())
+  author   User?     @relation(fields: [authorId], references: [id])
 }
 
 model User {
-  id            String    @default(cuid()) @id
-  name          String?
-  email         String    @unique
-  password      String
-  createdAt     DateTime  @default(now()) @map(name: "created_at")
-  updatedAt     DateTime  @updatedAt @map(name: "updated_at")
-  urls          Urls[]
-  @@map(name: "users")
+  id        String   @id @default(cuid())
+  name      String?
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  urls      Urls[]
+
+  @@map("users")
 }
