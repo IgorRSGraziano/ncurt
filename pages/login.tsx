@@ -62,11 +62,6 @@ function login() {
       }
     );
     // const data = await response.json();
-    console.log({
-      name: name.current?.value,
-      email: email.current.value,
-      password: password.current?.value,
-    });
   };
 
   return (

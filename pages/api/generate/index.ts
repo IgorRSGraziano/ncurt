@@ -38,7 +38,6 @@ export default async function handle(
     }
 
     await generateUrls(urlsToSend);
-    console.log("final");
     const response = {
       sucess: true,
       url: urlsToSend,

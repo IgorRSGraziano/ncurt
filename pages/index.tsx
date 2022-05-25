@@ -1,8 +1,10 @@
 import Head from "next/head";
 import React from "react";
 import styled from "styled-components";
+import { withIronSessionSsr } from "iron-session/next";
+import { sessionOptions } from "utils/session";
 
-import { textColor1, textColor2, rem } from "styles/style";
+import { textColor2, rem } from "styles/style";
 
 const URLInput = styled.input`
   max-width: 500px;
@@ -94,6 +96,23 @@ const ReturnMessage = styled.small`
   margin-bottom: 30px;
 `;
 
+export const getServerSideProps = withIronSessionSsr(async ({ req, res }) => {
+  const user = req.session.user;
+  console.log(req.session.user);
+
+  if (user === undefined) {
+    return {
+      props: {
+        user: null,
+      },
+    };
+  }
+
+  return {
+    props: { user: req.session.user },
+  };
+}, sessionOptions);
+
 const Home: React.FC = () => {
   //Status from default URL generate
   const [status, setStatus] = React.useState<string>(null);
@@ -122,7 +141,7 @@ const Home: React.FC = () => {
       const message = `Algo de Certo não deu errado: Sua url é: ${responseJson.url}`;
       setStatus(message);
     } catch (e) {
-      console.log(e);
+      console.warn(e);
       setStatus("Algo de errado não deu certo...");
     }
   };

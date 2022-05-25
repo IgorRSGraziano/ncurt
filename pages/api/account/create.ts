@@ -8,8 +8,6 @@ export default async function handle(
 ) {
   const { name, email, password } = req.body;
 
-  console.log(req.body);
-
   const generateAccount = async () => {
     await prisma.user.create({
       data: {
