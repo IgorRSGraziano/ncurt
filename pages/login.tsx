@@ -41,6 +41,33 @@ const InputField = styled.div`
 function login() {
   const [isSignup, setIsSignup] = React.useState<Boolean>(false);
 
+  const name = React.useRef(null);
+  const email = React.useRef(null);
+  const password = React.useRef(null);
+
+  const checkout = async (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    if (!isSignup) {
+      const response = await fetch("/api/account/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: name.current.value,
+          email: email.current.value,
+          password: password.current.value,
+        }),
+      });
+      // const data = await response.json();
+      console.log({
+        name: name.current.value,
+        email: email.current.value,
+        password: password.current.value,
+      });
+    }
+  };
+
   return (
     <main>
       <LoginForm>
@@ -48,18 +75,20 @@ function login() {
         {!isSignup && (
           <InputField>
             <Label htmlFor="senha">Nome</Label>
-            <Input type="text" />
+            <Input type="text" ref={name} />
           </InputField>
         )}
         <InputField>
           <Label htmlFor="email">E-Mail</Label>
-          <Input type="email" />
+          <Input type="email" ref={email} />
         </InputField>
         <InputField>
           <Label htmlFor="senha">Senha</Label>
-          <Input type="password" />
+          <Input type="password" ref={password} />
         </InputField>
-        <Button highlight={true}>{isSignup ? "Entrar" : "Criar conta"}</Button>
+        <Button highlight={true} onClick={checkout}>
+          {isSignup ? "Entrar" : "Criar conta"}
+        </Button>
         <Button highlight={false} onClick={() => setIsSignup(!isSignup)}>
           {isSignup ? "Não possui conta?" : "Já possui conta?"}
         </Button>

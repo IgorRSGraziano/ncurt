@@ -119,7 +119,7 @@ const Home: React.FC = () => {
 
       const responseJson = await response.json();
 
-      const message = `Sua url é: ${responseJson.url}`;
+      const message = `Algo de Certo não deu errado: Sua url é: ${responseJson.url}`;
       setStatus(message);
     } catch (e) {
       console.log(e);
