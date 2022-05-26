@@ -124,9 +124,16 @@ export const getServerSideProps = withIronSessionSsr(async ({ req, res }) => {
   };
 }, sessionOptions);
 
+interface IDestinyStatus {
+  generated: boolean;
+  response?: IResponseUrls;
+}
+
 const Home: React.FC = () => {
   //Status from default URL generate
-  const [status, setStatus] = React.useState<IResponseUrls>(null);
+  const [status, setStatus] = React.useState<IDestinyStatus>({
+    generated: false,
+  });
 
   //Verify destiny from shorted url
   const [destinyStatus, setDestinyStatus] = React.useState<string>(null);
@@ -149,12 +156,10 @@ const Home: React.FC = () => {
 
       const responseJson: IResponseUrls = await response.json();
 
-      console.log(responseJson);
-
-      setStatus(responseJson);
+      setStatus({ generated: true, response: responseJson });
     } catch (e) {
       console.warn(e);
-      setStatus({ sucess: false });
+      setStatus({ generated: true, response: { sucess: false } });
     }
   };
 
@@ -209,19 +214,20 @@ const Home: React.FC = () => {
         <Small>
           Você pode enviar uma lista de URL's passando um ";" entre elas
         </Small>
-        {status?.sucess ? (
-          status.urls?.map((el) => (
-            <ReturnMessage>
-              {el.url}
-              {"   "}
-              <FontAwesomeIcon icon={faArrowRight as IconProp} size="1x" />
-              {"   "}
-              <A>{el.destiny}</A>
-            </ReturnMessage>
-          ))
-        ) : (
-          <ReturnMessage>Algo de errado não deu certo...</ReturnMessage>
-        )}
+        {status.generated &&
+          (status.response?.sucess ? (
+            status.response?.urls?.map((el) => (
+              <ReturnMessage>
+                {el.url}
+                {"   "}
+                <FontAwesomeIcon icon={faArrowRight as IconProp} size="1x" />
+                {"   "}
+                <A>{el.destiny}</A>
+              </ReturnMessage>
+            ))
+          ) : (
+            <ReturnMessage>Algo de errado não deu certo...</ReturnMessage>
+          ))}
 
         <p>
           <label htmlFor="urlVerify">Deseja saber aonde uma URL leva?</label>
