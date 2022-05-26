@@ -222,7 +222,10 @@ const Home: React.FC = () => {
                 {"   "}
                 <FontAwesomeIcon icon={faArrowRight as IconProp} size="1x" />
                 {"   "}
-                <A target="_blank" href={`${el.url}`}>
+                <A
+                  target="_blank"
+                  href={`${window.location.protocol}//${el.url}`}
+                >
                   {el.url}
                 </A>
               </ReturnMessage>
