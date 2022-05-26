@@ -218,11 +218,13 @@ const Home: React.FC = () => {
           (status.response?.sucess ? (
             status.response?.urls?.map((el) => (
               <ReturnMessage>
-                {el.url}
+                {el.destiny}
                 {"   "}
                 <FontAwesomeIcon icon={faArrowRight as IconProp} size="1x" />
                 {"   "}
-                <A>{el.destiny}</A>
+                <A target="_blank" href={`${el.url}`}>
+                  {el.url}
+                </A>
               </ReturnMessage>
             ))
           ) : (

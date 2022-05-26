@@ -20,7 +20,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 };
 
 function redirect() {
-  return <div>redirect</div>;
+  return null;
 }
 
 export default redirect;

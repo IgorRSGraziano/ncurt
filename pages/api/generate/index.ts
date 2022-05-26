@@ -16,7 +16,7 @@ export default async function handle(
   const lastUrl =
     await prisma.$queryRaw`SELECT url FROM "Urls" ORDER BY number DESC LIMIT 1`;
 
-  const urlsToSend = [];
+  const urlsToSend: IUrl[] = [];
 
   const generateUrls = async (urls: IUrl[]) => {
     await prisma.urls.createMany({
@@ -29,26 +29,34 @@ export default async function handle(
       if (i === 0) {
         const generatedNewUrl = alphanumericIncrement(lastUrl[0].url);
         const url: IUrl = {
-          url: allUrls[i],
-          destiny: `${req.headers.host}/${generatedNewUrl}`,
+          destiny: allUrls[i],
+          url: `${generatedNewUrl}`,
         };
-        console.log(lastUrl);
+
         urlsToSend.push(url);
       } else {
         const generatedNewUrl = alphanumericIncrement(urlsToSend[i - 1].url);
         const url: IUrl = {
-          url: allUrls[i],
-          destiny: `${req.headers.host}/${generatedNewUrl}`,
+          destiny: allUrls[i],
+          url: `${generatedNewUrl}`,
         };
         urlsToSend.push(url);
       }
     }
     console.log(urlsToSend);
+
     await generateUrls(urlsToSend);
+
+    //After send default URL for DB, concat with host
+    for (let i = 0; i < urlsToSend.length; i++) {
+      urlsToSend[i].url = `${req.headers.host}/${urlsToSend[i].url}`;
+    }
+
     const response: IResponseUrls = {
       sucess: true,
       urls: urlsToSend,
     };
+
     res.json(response);
   } catch (e) {
     const response = {
