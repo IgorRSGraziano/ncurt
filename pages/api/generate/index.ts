@@ -10,7 +10,7 @@ export default async function handle(
   res: NextApiResponse
 ) {
   const { destiny } = req.body;
-  let allUrls = destiny.split(";").map((url) => url.trim());
+  let allUrls: string = destiny.split(";").map((url: string) => url.trim());
 
   //Return the last generated URL
   const lastUrl =
@@ -18,7 +18,7 @@ export default async function handle(
 
   const urlsToSend = [];
 
-  const generateUrls = async (urls) => {
+  const generateUrls = async (urls: IUrl[]) => {
     await prisma.urls.createMany({
       data: urls,
     });
@@ -29,20 +29,21 @@ export default async function handle(
       if (i === 0) {
         const generatedNewUrl = alphanumericIncrement(lastUrl[0].url);
         const url: IUrl = {
-          url: generatedNewUrl,
-          destiny: allUrls[i],
+          url: allUrls[i],
+          destiny: `${req.headers.host}/${generatedNewUrl}`,
         };
+        console.log(lastUrl);
         urlsToSend.push(url);
       } else {
         const generatedNewUrl = alphanumericIncrement(urlsToSend[i - 1].url);
         const url: IUrl = {
-          url: generatedNewUrl,
-          destiny: allUrls[i],
+          url: allUrls[i],
+          destiny: `${req.headers.host}/${generatedNewUrl}`,
         };
         urlsToSend.push(url);
       }
     }
-
+    console.log(urlsToSend);
     await generateUrls(urlsToSend);
     const response: IResponseUrls = {
       sucess: true,
