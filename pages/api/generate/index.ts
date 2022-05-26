@@ -1,3 +1,5 @@
+import { IUrl, IResponseUrls } from "interfaces/URL";
+
 import type { NextApiRequest, NextApiResponse } from "next";
 
 import prisma from "services/prisma";
@@ -16,10 +18,6 @@ export default async function handle(
 
   const urlsToSend = [];
 
-  const mountedUrl = `${req.headers.host}/${alphanumericIncrement(
-    lastUrl[0]?.url
-  )}`;
-
   const generateUrls = async (urls) => {
     await prisma.urls.createMany({
       data: urls,
@@ -30,17 +28,25 @@ export default async function handle(
     for (let i = 0; i < allUrls.length; i++) {
       if (i === 0) {
         const generatedNewUrl = alphanumericIncrement(lastUrl[0].url);
-        urlsToSend.push({ url: generatedNewUrl, destiny: allUrls[i] });
+        const url: IUrl = {
+          url: generatedNewUrl,
+          destiny: allUrls[i],
+        };
+        urlsToSend.push(url);
       } else {
         const generatedNewUrl = alphanumericIncrement(urlsToSend[i - 1].url);
-        urlsToSend.push({ url: generatedNewUrl, destiny: allUrls[i] });
+        const url: IUrl = {
+          url: generatedNewUrl,
+          destiny: allUrls[i],
+        };
+        urlsToSend.push(url);
       }
     }
 
     await generateUrls(urlsToSend);
-    const response = {
+    const response: IResponseUrls = {
       sucess: true,
-      url: urlsToSend,
+      urls: urlsToSend,
     };
     res.json(response);
   } catch (e) {

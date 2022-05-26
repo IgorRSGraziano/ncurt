@@ -4,7 +4,13 @@ import styled from "styled-components";
 import { withIronSessionSsr } from "iron-session/next";
 import { sessionOptions } from "utils/session";
 
-import { textColor2, rem } from "styles/style";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
+
+import { textColor2, rem, textColor1 } from "styles/style";
+
+import type { IUrl, IResponseUrls } from "interfaces/URL";
 
 const URLInput = styled.input`
   max-width: 500px;
@@ -96,6 +102,11 @@ const ReturnMessage = styled.small`
   margin-bottom: 30px;
 `;
 
+const A = styled.a`
+  text-decoration: underline;
+  color: ${textColor2};
+`;
+
 export const getServerSideProps = withIronSessionSsr(async ({ req, res }) => {
   const user = req.session.user;
   console.log(req.session.user);
@@ -115,7 +126,7 @@ export const getServerSideProps = withIronSessionSsr(async ({ req, res }) => {
 
 const Home: React.FC = () => {
   //Status from default URL generate
-  const [status, setStatus] = React.useState<string>(null);
+  const [status, setStatus] = React.useState<IResponseUrls>(null);
 
   //Verify destiny from shorted url
   const [destinyStatus, setDestinyStatus] = React.useState<string>(null);
@@ -136,23 +147,24 @@ const Home: React.FC = () => {
         body: JSON.stringify(body),
       });
 
-      const responseJson = await response.json();
+      const responseJson: IResponseUrls = await response.json();
 
-      const message = `Algo de Certo não deu errado: Sua url é: ${responseJson.url}`;
-      setStatus(message);
+      console.log(responseJson);
+
+      setStatus(responseJson);
     } catch (e) {
       console.warn(e);
-      setStatus("Algo de errado não deu certo...");
+      setStatus({ sucess: false });
     }
   };
 
   const verifyUrl = async (e: React.SyntheticEvent) => {
     e.preventDefault();
+
     try {
       const body = {
         url: destinyUrl.current.value,
       };
-
       const response = await fetch("/api/verify", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -160,8 +172,7 @@ const Home: React.FC = () => {
       });
 
       const responseJson = await response.json();
-
-      let message;
+      let message: string;
       if (responseJson.sucess) {
         message = `Essa URL leva para: ${responseJson.destiny}`;
       } else {
@@ -198,7 +209,19 @@ const Home: React.FC = () => {
         <Small>
           Você pode enviar uma lista de URL's passando um ";" entre elas
         </Small>
-        <ReturnMessage>{status}</ReturnMessage>
+        {status?.sucess ? (
+          status.urls?.map((el) => (
+            <ReturnMessage>
+              {el.url}
+              {"   "}
+              <FontAwesomeIcon icon={faArrowRight as IconProp} size="1x" />
+              {"   "}
+              <A>{el.destiny}</A>
+            </ReturnMessage>
+          ))
+        ) : (
+          <ReturnMessage>Algo de errado não deu certo...</ReturnMessage>
+        )}
 
         <p>
           <label htmlFor="urlVerify">Deseja saber aonde uma URL leva?</label>
