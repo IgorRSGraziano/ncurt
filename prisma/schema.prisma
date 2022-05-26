@@ -10,6 +10,7 @@ datasource db {
 model Urls {
   id       String    @id @default(cuid())
   url      String    @unique
+  count    Int       @default(0)
   destiny  String
   createAt DateTime  @default(now())
   expireAt DateTime?

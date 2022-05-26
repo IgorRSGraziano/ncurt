@@ -11,6 +11,15 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     },
   });
 
+  const increment = await prisma.urls.update({
+    where: {
+      id: `${redirect.id}`,
+    },
+    data: {
+      count: 1 + redirect.count,
+    },
+  });
+
   return {
     redirect: {
       destination: redirect?.destiny || "/not-found",
