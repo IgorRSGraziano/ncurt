@@ -9,6 +9,8 @@ import { withIronSessionSsr } from "iron-session/next";
 import type { IUser } from "interfaces/User";
 import prisma from "services/prisma";
 
+import { useRouter } from "next/router";
+
 const Title = styled.h1`
   font-size: ${rem(50)};
 `;
@@ -94,6 +96,7 @@ const Selecao = styled.div`
   flex-direction: column;
   width: 500px;
   margin: auto;
+  margin-bottom: 100px !important;
   /* background-color: rgb(0, 30, 60); */
   border: 3px solid rgb(0, 127, 255);
 
@@ -105,7 +108,7 @@ const Selecao = styled.div`
 `;
 
 const Main = styled.main`
-  height: 110vh;
+  height: auto;
 `;
 
 export const getServerSideProps = withIronSessionSsr(async ({ req, res }) => {
@@ -139,6 +142,14 @@ interface IAccount {
 
 const Account: React.FC<IAccount> = ({ user }) => {
   const [selecao, setSelecao] = React.useState<boolean>(true);
+
+  const router = useRouter();
+
+  React.useEffect(() => {
+    if (!user.isLogged) {
+      router.push("/login");
+    }
+  }, []);
 
   return (
     <Main>

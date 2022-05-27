@@ -43,7 +43,7 @@ function Header() {
           </a>
         </Link>
         <div>
-          <Link href={`/login`}>
+          <Link href={`/account`}>
             <LoginArea>
               <FontAwesomeIcon icon={faUser as IconProp} size="2x" />
               {isLogged ? "Minha conta" : "Login/Cadastro"}
