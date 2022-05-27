@@ -242,10 +242,14 @@ const Home: React.FC<IHome> = ({ user }) => {
   };
 
   const verifyUrlFormat = (): void => {
-    const url = defaultUrl.current.value;
+    const urls: string[] = defaultUrl.current.value.split(";");
+
     const urlRegex =
       /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
-    if (urlRegex.test(url)) {
+
+    const isValid = urls.every((url) => urlRegex.test(url));
+
+    if (isValid) {
       setUrlValidFormat({ isValid: true });
     } else {
       setUrlValidFormat({
