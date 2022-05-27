@@ -112,10 +112,11 @@ const ReturnMessage = styled.small`
   text-align: center;
 `;
 
-const A = styled.a`
+export const A = styled.a`
   text-decoration: underline;
   color: ${textColor2};
   margin-bottom: 30px;
+  cursor: pointer;
 `;
 
 export const Error = styled(Small)`

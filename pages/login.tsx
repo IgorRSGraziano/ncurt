@@ -3,6 +3,9 @@ import React from "react";
 import styled from "styled-components";
 import { rem, Button } from "styles/style";
 import { Error } from "pages";
+import type { IUser } from "interfaces/User";
+import { withIronSessionSsr } from "iron-session/next";
+import { sessionOptions } from "utils/session";
 
 const Title = styled.h1`
   font-size: ${rem(50)};
@@ -39,6 +42,24 @@ const InputField = styled.div`
   width: 400px;
   margin: 10px 0;
 `;
+
+export const getServerSideProps = withIronSessionSsr(async ({ req, res }) => {
+  const user: IUser = req.session.user;
+
+  if (user === undefined) {
+    return {
+      props: {
+        user: {
+          isLogged: false,
+        },
+      },
+    };
+  } else {
+    return {
+      props: { user: req.session.user },
+    };
+  }
+}, sessionOptions);
 
 function login() {
   const [isSignup, setIsSignup] = React.useState<Boolean>(false);
