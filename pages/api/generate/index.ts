@@ -24,12 +24,17 @@ export default async function handle(
     });
   };
 
+  //Regext to separe protocol from url and add url in capturing group
+  function addHttps(url: string): string {
+    return url.replace(/^(?:http[s]?:\/\/)?([\S]+)/gi, "https://$1");
+  }
+
   try {
     for (let i = 0; i < allUrls.length; i++) {
       if (i === 0) {
         const generatedNewUrl = alphanumericIncrement(lastUrl[0].url);
         const url: IUrl = {
-          destiny: allUrls[i],
+          destiny: addHttps(allUrls[i]),
           url: `${generatedNewUrl}`,
         };
 
@@ -37,7 +42,7 @@ export default async function handle(
       } else {
         const generatedNewUrl = alphanumericIncrement(urlsToSend[i - 1].url);
         const url: IUrl = {
-          destiny: allUrls[i],
+          destiny: addHttps(allUrls[i]),
           url: `${generatedNewUrl}`,
         };
         urlsToSend.push(url);
