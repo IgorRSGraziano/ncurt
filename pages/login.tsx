@@ -1,6 +1,8 @@
+import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 import { rem, Button } from "styles/style";
+import { Error } from "pages";
 
 const Title = styled.h1`
   font-size: ${rem(50)};
@@ -41,12 +43,17 @@ const InputField = styled.div`
 function login() {
   const [isSignup, setIsSignup] = React.useState<Boolean>(false);
 
+  const [status, setStatus] = React.useState<string>("");
+
   const name = React.useRef(null);
   const email = React.useRef(null);
   const password = React.useRef(null);
 
+  const router = useRouter();
+
   const checkout = async (e: React.SyntheticEvent) => {
     e.preventDefault();
+    console.log("inicio");
     const response = await fetch(
       `/api/account/${isSignup ? "login" : "create"}`,
       {
@@ -61,7 +68,14 @@ function login() {
         }),
       }
     );
-    // const data = await response.json();
+
+    const data = await response.json();
+
+    if (data.sucess) {
+      router.push("/account");
+    } else {
+      setStatus("Senha ou e-mail incorretos.");
+    }
   };
 
   return (
@@ -82,6 +96,7 @@ function login() {
           <Label htmlFor="senha">Senha</Label>
           <Input type="password" ref={password} />
         </InputField>
+        <Error>{status}</Error>
         <Button highlight={true} onClick={checkout}>
           {isSignup ? "Entrar" : "Criar conta"}
         </Button>

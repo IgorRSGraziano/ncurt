@@ -118,7 +118,7 @@ const A = styled.a`
   margin-bottom: 30px;
 `;
 
-const Error = styled(Small)`
+export const Error = styled(Small)`
   color: ${errorColor1} !important;
   font-weight: bold;
   display: block;
@@ -184,6 +184,7 @@ interface IHome {
 }
 
 const Home: React.FC<IHome> = ({ user }) => {
+  console.log(user);
   //Status from default URL generate
   const [status, setStatus] = React.useState<IDestinyStatus>({
     generated: false,
