@@ -247,7 +247,7 @@ const Home: React.FC<IHome> = ({ user }) => {
       .map((u: string) => u.trim());
 
     const urlRegex =
-      /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
+      /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/i;
 
     const isValid = urls.every((url) => urlRegex.test(url));
 
