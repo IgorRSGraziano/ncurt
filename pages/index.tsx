@@ -117,7 +117,7 @@ const A = styled.a`
 `;
 
 const Error = styled(Small)`
-  color: ${errorColor1};
+  color: ${errorColor1} !important;
   font-weight: bold;
   display: block;
 `;
