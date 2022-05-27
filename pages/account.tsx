@@ -26,16 +26,29 @@ const LoginForm = styled.div`
   align-items: center;
   margin: auto;
   width: fit-content;
+  max-width: 90vw;
+`;
+
+const LoginForm2 = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  width: 100%;
+  max-width: 90vw;
 `;
 
 const Label = styled.label`
   width: 100%;
+  max-width: 80vw;
+  margin: auto;
   font-size: ${rem(20)};
 `;
 
 const Input = styled.input`
   display: block;
-  width: 400px;
+  width: 100%;
   height: 40px;
   border-radius: 5px;
   background-color: rgb(19, 47, 76);
@@ -47,12 +60,14 @@ const Input = styled.input`
 `;
 
 const InputField = styled.div`
-  width: 400px;
+  width: 100%;
+  max-width: 90vw;
   margin: 10px 0;
 `;
 
 const Button1 = styled.button`
   width: 100%;
+  max-width: 90vw;
   border: 1px solid rgb(38, 93, 151);
   border-left: 0px;
   background-color: rgb(0, 127, 255);
@@ -67,6 +82,7 @@ const Button1 = styled.button`
 
 const Button2 = styled.button`
   width: 100%;
+  max-width: 90vw;
   border: 1px solid rgb(38, 93, 151);
   border-left: 0px;
   color: rgb(0, 127, 255);
@@ -105,7 +121,7 @@ const Selecao = styled.div`
   color: rgb(0, 127, 255);
   font-weight: bold;
   border-radius: 10px;
-  padding: 20px;
+  padding: 10px;
   box-shadow: 1px 20px 10px rgba(0, 0, 0, 0.3);
 `;
 
@@ -186,7 +202,11 @@ const Account: React.FC<IAccount> = ({ user }) => {
                   return (
                     <URLinfo>
                       <URLFrom>
-                        Url Encurtada: <A>{url.url}</A>
+                        Url Encurtada:{" "}
+                        <A
+                          target={`_blank`}
+                          href={`/${url.url}`}
+                        >{`ncurt.vercel.app/${url.url}`}</A>
                       </URLFrom>
                       <URLDesiny>Destino: {url.destiny}</URLDesiny>
                       <URLCount>Cliques: {url.count}</URLCount>
@@ -197,7 +217,7 @@ const Account: React.FC<IAccount> = ({ user }) => {
             )
           ) : (
             <Selecao>
-              <LoginForm>
+              <LoginForm2>
                 <Title2>Seus Dados</Title2>
 
                 <InputField>
@@ -214,7 +234,7 @@ const Account: React.FC<IAccount> = ({ user }) => {
                   <Input type="password" required />
                 </InputField>
                 <Button2>Atualizar</Button2>
-              </LoginForm>
+              </LoginForm2>
             </Selecao>
           )}
         </Result>
