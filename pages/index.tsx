@@ -106,14 +106,16 @@ const H1 = styled.h1`
 `;
 
 const ReturnMessage = styled.small`
-  height: 20px;
+  height: auto;
   font-size: ${rem(20)};
-  margin-bottom: 30px;
+  margin-bottom: 15px;
+  text-align: center;
 `;
 
 const A = styled.a`
   text-decoration: underline;
   color: ${textColor2};
+  margin-bottom: 30px;
 `;
 
 const Error = styled(Small)`
@@ -139,6 +141,14 @@ const CopyBtn = styled.button`
     background-color: rgb(38, 93, 151);
     color: rgb(19, 47, 76);
   }
+`;
+
+interface IBr {
+  height: number;
+}
+
+const Br = styled.div<IBr>`
+  height: ${(props) => props.height}PX;
 `;
 
 export const getServerSideProps = withIronSessionSsr(async ({ req, res }) => {
