@@ -5,7 +5,7 @@ import { withIronSessionSsr } from "iron-session/next";
 import { sessionOptions } from "utils/session";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { faArrowRight, faCopy } from "@fortawesome/free-solid-svg-icons";
 
 import { textColor2, rem, errorColor1 } from "styles/style";
 
@@ -120,6 +120,25 @@ const Error = styled(Small)`
   color: ${errorColor1};
   font-weight: bold;
   display: block;
+`;
+
+const CopyBtn = styled.button`
+  border-radius: 7px;
+  cursor: pointer;
+  background-color: rgb(19, 47, 76);
+  border: 1px solid rgb(38, 93, 151);
+  color: rgb(38, 93, 151);
+  padding: 5px;
+  text-align: center;
+  font-size: ${rem(17)};
+  transition: 0.3s;
+  margin-left: 15px;
+
+  &:active {
+    transition: 0s;
+    background-color: rgb(38, 93, 151);
+    color: rgb(19, 47, 76);
+  }
 `;
 
 export const getServerSideProps = withIronSessionSsr(async ({ req, res }) => {
@@ -278,6 +297,13 @@ const Home: React.FC<IHome> = ({ user }) => {
                 >
                   {el.url}
                 </A>
+                <CopyBtn
+                  onClick={() => {
+                    navigator.clipboard.writeText(el.url);
+                  }}
+                >
+                  <FontAwesomeIcon icon={faCopy as IconProp} size="1x" />
+                </CopyBtn>
               </ReturnMessage>
             ))
           ) : (

@@ -13,6 +13,7 @@ async function generateURL(req: NextApiRequest, res: NextApiResponse) {
   let allUrls: string = destiny.split(";").map((url: string) => url.trim());
 
   //Return the last generated URL
+  //FIXME: Pass this for Prisma and remove raw query
   const lastUrl =
     await prisma.$queryRaw`SELECT url FROM "Urls" ORDER BY number DESC LIMIT 1`;
 
