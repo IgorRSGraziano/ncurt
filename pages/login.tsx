@@ -71,10 +71,14 @@ function login() {
 
     const data = await response.json();
 
+    console.log(data);
+
     if (data.sucess) {
       router.push("/account");
     } else {
-      setStatus("Senha ou e-mail incorretos.");
+      setStatus(
+        isSignup ? "Senha ou e-mail incorretos." : "E-mail já cadastrado."
+      );
     }
   };
 
