@@ -27,6 +27,8 @@ async function generateURL(req: NextApiRequest, res: NextApiResponse) {
 
   //Regext to separe protocol from url and add url in capturing group
   function addHttps(url: string): string {
+    console.log(url);
+    console.log(url.replace(/^(?:http[s]?:\/\/)?([\S]+)/gi, "https://$1"));
     return url.replace(/^(?:http[s]?:\/\/)?([\S]+)/gi, "https://$1");
   }
 
@@ -65,6 +67,7 @@ async function generateURL(req: NextApiRequest, res: NextApiResponse) {
 
     res.json(response);
   } catch (e) {
+    console.error(e);
     const response = {
       sucess: false,
     };
