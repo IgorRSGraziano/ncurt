@@ -1,14 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from "next";
+import type { IUser } from "interfaces/User";
+
 import { withIronSessionApiRoute } from "iron-session/next";
 import { sessionOptions } from "utils/session";
 import prisma from "services/prisma";
-
-export type User = {
-  isLogged: boolean;
-  id?: string;
-  name?: string;
-  email?: string;
-};
 
 export default withIronSessionApiRoute(
   async (req: NextApiRequest, res: NextApiResponse) => {
@@ -21,7 +16,7 @@ export default withIronSessionApiRoute(
       },
     });
 
-    const user: User = {
+    const user: IUser = {
       isLogged: true,
       id: verifyAccount.id,
       email: verifyAccount.email,

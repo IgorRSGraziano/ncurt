@@ -6,11 +6,12 @@ import { sessionOptions } from "utils/session";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
-import { IconProp } from "@fortawesome/fontawesome-svg-core";
 
 import { textColor2, rem, errorColor1 } from "styles/style";
 
 import type { IUrl, IResponseUrls } from "interfaces/URL";
+import type { IconProp } from "@fortawesome/fontawesome-svg-core";
+import type { IUser } from "interfaces/User";
 
 interface IUrlValid {
   isInvalid?: boolean;
@@ -122,20 +123,21 @@ const Error = styled(Small)`
 `;
 
 export const getServerSideProps = withIronSessionSsr(async ({ req, res }) => {
-  const user = req.session.user;
-  console.log(req.session.user);
+  const user: IUser = req.session.user;
 
   if (user === undefined) {
     return {
       props: {
-        user: null,
+        user: {
+          isLogged: false,
+        },
       },
     };
+  } else {
+    return {
+      props: { user: req.session.user },
+    };
   }
-
-  return {
-    props: { user: req.session.user },
-  };
 }, sessionOptions);
 
 interface IDestinyStatus {
@@ -148,7 +150,11 @@ interface IUrlValidFormat {
   error?: string;
 }
 
-const Home: React.FC = () => {
+interface IHome {
+  user: IUser;
+}
+
+const Home: React.FC<IHome> = ({ user }) => {
   //Status from default URL generate
   const [status, setStatus] = React.useState<IDestinyStatus>({
     generated: false,

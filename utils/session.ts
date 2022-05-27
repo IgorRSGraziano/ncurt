@@ -1,4 +1,4 @@
-import type { User } from "pages/api/account/login";
+import type { IUser } from "interfaces/User";
 
 export const sessionOptions = {
   password: process.env.SECRET_COOKIE_PASSWORD as string,
@@ -10,6 +10,6 @@ export const sessionOptions = {
 
 declare module "iron-session" {
   interface IronSessionData {
-    user?: User;
+    user?: IUser;
   }
 }
