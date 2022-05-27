@@ -1,14 +1,14 @@
-import { IUrl, IResponseUrls } from "interfaces/URL";
-
+import type { IUrl, IResponseUrls } from "interfaces/URL";
+import type { IUser } from "interfaces/User";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 import prisma from "services/prisma";
 import alphanumericIncrement from "utils/alphanumericIncrement";
+import { withIronSessionApiRoute } from "iron-session/next";
+import { sessionOptions } from "utils/session";
 
-export default async function handle(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+async function generateURL(req: NextApiRequest, res: NextApiResponse) {
+  const user: IUser = req.session.user;
   const { destiny } = req.body;
   let allUrls: string = destiny.split(";").map((url: string) => url.trim());
 
@@ -36,6 +36,7 @@ export default async function handle(
         const url: IUrl = {
           destiny: addHttps(allUrls[i]),
           url: `${generatedNewUrl}`,
+          authorId: user.id,
         };
 
         urlsToSend.push(url);
@@ -44,12 +45,11 @@ export default async function handle(
         const url: IUrl = {
           destiny: addHttps(allUrls[i]),
           url: `${generatedNewUrl}`,
+          authorId: user.id,
         };
         urlsToSend.push(url);
       }
     }
-    console.log(urlsToSend);
-
     await generateUrls(urlsToSend);
 
     //After send default URL for DB, concat with host
@@ -71,3 +71,5 @@ export default async function handle(
     res.json(response);
   }
 }
+
+export default withIronSessionApiRoute(generateURL, sessionOptions);
