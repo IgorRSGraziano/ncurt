@@ -51,6 +51,7 @@ export const MainContainer = styled.main`
 
 export const Button = styled.button<IStyle>`
   width: 100%;
+  max-width: 90vw;
   border: ${(props) =>
     props.highlight
       ? "1px solid rgb(38, 93, 151)"

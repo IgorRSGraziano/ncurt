@@ -28,6 +28,7 @@ const Label = styled.label`
 const Input = styled.input`
   display: block;
   width: 400px;
+  max-width: 90vw;
   height: 40px;
   border-radius: 5px;
   background-color: rgb(19, 47, 76);
@@ -39,7 +40,7 @@ const Input = styled.input`
 `;
 
 const InputField = styled.div`
-  width: 400px;
+  width: auto;
   margin: 10px 0;
 `;
 

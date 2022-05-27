@@ -95,7 +95,9 @@ const Selecao = styled.div`
   align-items: start;
   flex-direction: column;
   width: 500px;
+  max-width: 90vw;
   margin: auto;
+  margin-top: 20px;
   margin-bottom: 100px !important;
   /* background-color: rgb(0, 30, 60); */
   border: 3px solid rgb(0, 127, 255);
