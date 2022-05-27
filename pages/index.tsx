@@ -8,32 +8,39 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 
-import { textColor2, rem, textColor1 } from "styles/style";
+import { textColor2, rem, errorColor1 } from "styles/style";
 
 import type { IUrl, IResponseUrls } from "interfaces/URL";
 
-const URLInput = styled.input`
+interface IUrlValid {
+  isInvalid?: boolean;
+}
+const URLInput = styled.input<IUrlValid>`
   max-width: 500px;
+  position: relative;
   width: 100%;
   height: 100%;
   border-radius: 5px;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
   background-color: rgb(19, 47, 76);
-  border: 1px solid rgb(38, 93, 151);
+  border: 1px solid
+    ${(props) => (props.isInvalid ? errorColor1 : "rgb(38, 93, 151)")};
   color: rgb(178, 186, 194);
   text-align: center;
   font-size: ${rem(17)};
   transition: 0.3s;
 
   &:hover {
-    border-color: rgb(51, 153, 255);
+    border-color: ${(props) =>
+      props.isInvalid ? errorColor1 : "rgb(51, 153, 255)"};
     background-color: rgb(23, 58, 94);
     transition: 0.3s;
   }
 
   &:focus {
-    border-color: rgb(51, 153, 255);
+    border-color: ${(props) =>
+      props.isInvalid ? errorColor1 : "rgb(38, 93, 151)"};
     background-color: rgb(23, 58, 94);
     transition: 0.3s;
     outline: none;
@@ -69,7 +76,7 @@ const InputContainer = styled.div`
   height: 40px;
 `;
 
-const BtnGerarURL = styled.button`
+const BtnGerarURL = styled.button<IUrlValid>`
   border: 1px solid rgb(38, 93, 151);
   border-left: 0px;
   height: 100%;
@@ -80,6 +87,7 @@ const BtnGerarURL = styled.button`
   cursor: pointer;
   font-weight: bold;
   transition: 0.3s;
+  ${(props) => (props.isInvalid ? "filter: contrast(0.5);" : "")}
 
   &:hover {
     background-color: #0059b2;
@@ -107,6 +115,12 @@ const A = styled.a`
   color: ${textColor2};
 `;
 
+const Error = styled(Small)`
+  color: ${errorColor1};
+  font-weight: bold;
+  display: block;
+`;
+
 export const getServerSideProps = withIronSessionSsr(async ({ req, res }) => {
   const user = req.session.user;
   console.log(req.session.user);
@@ -129,10 +143,19 @@ interface IDestinyStatus {
   response?: IResponseUrls;
 }
 
+interface IUrlValidFormat {
+  isValid: boolean;
+  error?: string;
+}
+
 const Home: React.FC = () => {
   //Status from default URL generate
   const [status, setStatus] = React.useState<IDestinyStatus>({
     generated: false,
+  });
+
+  const [urlValidFormat, setUrlValidFormat] = React.useState<IUrlValidFormat>({
+    isValid: true,
   });
 
   //Verify destiny from shorted url
@@ -143,56 +166,69 @@ const Home: React.FC = () => {
 
   const generateUrl = async (e: React.SyntheticEvent) => {
     e.preventDefault();
-    try {
-      const body = {
-        destiny: defaultUrl.current.value,
-      };
 
-      const response = await fetch("/api/generate", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      });
+    if (!!defaultUrl.current.value)
+      try {
+        const body = {
+          destiny: defaultUrl.current.value,
+        };
 
-      const responseJson: IResponseUrls = await response.json();
+        const response = await fetch("/api/generate", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body),
+        });
 
-      setStatus({ generated: true, response: responseJson });
-    } catch (e) {
-      console.warn(e);
-      setStatus({ generated: true, response: { sucess: false } });
-    }
+        const responseJson: IResponseUrls = await response.json();
+
+        setStatus({ generated: true, response: responseJson });
+      } catch (e) {
+        console.warn(e);
+        setStatus({ generated: true, response: { sucess: false } });
+      }
   };
 
   const verifyUrl = async (e: React.SyntheticEvent) => {
     e.preventDefault();
 
-    try {
-      const body = {
-        url: destinyUrl.current.value,
-      };
-      const response = await fetch("/api/verify", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      });
+    if (!!destinyUrl.current.value)
+      try {
+        const body = {
+          url: destinyUrl.current.value,
+        };
+        const response = await fetch("/api/verify", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body),
+        });
 
-      const responseJson = await response.json();
-      let message: string;
-      if (responseJson.sucess) {
-        message = `Essa URL leva para: ${responseJson.destiny}`;
-      } else {
-        message = "Não foi encontrado essa URL";
+        const responseJson = await response.json();
+        let message: string;
+        if (responseJson.sucess) {
+          message = `Essa URL leva para: ${responseJson.destiny}`;
+        } else {
+          message = "Não foi encontrado essa URL";
+        }
+        setDestinyStatus(message);
+      } catch (e) {
+        console.log(e);
+        setDestinyStatus("Algo de errado não deu certo...");
       }
-      setDestinyStatus(message);
-    } catch (e) {
-      console.log(e);
-      setDestinyStatus("Algo de errado não deu certo...");
-    }
   };
 
-  <Head>
-    <title>nCurt</title>
-  </Head>;
+  const verifyUrlFormat = (): void => {
+    const url = defaultUrl.current.value;
+    const urlRegex =
+      /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
+    if (urlRegex.test(url)) {
+      setUrlValidFormat({ isValid: true });
+    } else {
+      setUrlValidFormat({
+        isValid: false,
+        error: "Parece que essa URL é invalida...",
+      });
+    }
+  };
 
   return (
     <HomeStyle>
@@ -207,10 +243,18 @@ const Home: React.FC = () => {
             type={"text"}
             placeholder="https://www.site.com.br"
             id="url"
+            isInvalid={!urlValidFormat.isValid}
             ref={defaultUrl}
+            onChange={verifyUrlFormat}
           />
-          <BtnGerarURL onClick={generateUrl}>Gerar</BtnGerarURL>
+          <BtnGerarURL
+            isInvalid={!urlValidFormat.isValid}
+            onClick={(e) => urlValidFormat.isValid && generateUrl(e)}
+          >
+            Gerar
+          </BtnGerarURL>
         </InputContainer>
+        {!urlValidFormat.isValid && <Error>{urlValidFormat.error}</Error>}
         <Small>
           Você pode enviar uma lista de URL's passando um ";" entre elas
         </Small>
@@ -244,7 +288,7 @@ const Home: React.FC = () => {
             id="urlVerify"
             ref={destinyUrl}
           />
-          <BtnGerarURL onClick={verifyUrl}>Gerar</BtnGerarURL>
+          <BtnGerarURL onClick={verifyUrl}>Verificar</BtnGerarURL>
         </InputContainer>
         <ReturnMessage>{destinyStatus}</ReturnMessage>
       </CollumAlign>

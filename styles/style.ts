@@ -7,6 +7,8 @@ export function rem(px: number): string {
 export const textColor1 = `rgb(178, 186, 194)`;
 export const textColor2 = `rgb(255, 255, 255)`;
 
+export const errorColor1 = `#f44336`;
+
 export const fontSize1 = rem(14);
 export const fontSize2 = rem(23);
 export const fontSize3 = rem(34);
