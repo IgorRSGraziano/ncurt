@@ -259,7 +259,7 @@ const Home: React.FC<IHome> = ({ user }) => {
       .map((u: string) => u.trim());
 
     const urlRegex =
-      /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/i;
+      /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/gi;
 
     const isValid = urls.every((url) => urlRegex.test(url));
 
