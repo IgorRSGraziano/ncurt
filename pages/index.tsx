@@ -261,7 +261,7 @@ const Home: React.FC<IHome> = ({ user }) => {
     const urlRegex =
       /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/gi;
 
-    const isValid = urls.every((url) => urlRegex.test(url));
+    const isValid = urls.every((url) => url.match(urlRegex));
 
     if (isValid) {
       setUrlValidFormat({ isValid: true });
