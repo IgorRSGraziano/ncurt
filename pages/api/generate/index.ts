@@ -3,7 +3,7 @@ import type { IUser } from "interfaces/User";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 import prisma from "services/prisma";
-import alphanumericIncrement from "utils/alphanumericIncrement";
+import { UnicodeIncrement } from "utils/unicodeIncrement";
 import { withIronSessionApiRoute } from "iron-session/next";
 import { sessionOptions } from "utils/session";
 
@@ -33,7 +33,9 @@ async function generateURL(req: NextApiRequest, res: NextApiResponse) {
   try {
     for (let i = 0; i < allUrls.length; i++) {
       if (i === 0) {
-        const generatedNewUrl = alphanumericIncrement(lastUrl[0].url);
+        const generatedNewUrl = UnicodeIncrement.incrementSystem(
+          lastUrl[0].url
+        );
         const url: IUrl = {
           destiny: addHttps(allUrls[i]),
           url: `${generatedNewUrl}`,
@@ -42,7 +44,9 @@ async function generateURL(req: NextApiRequest, res: NextApiResponse) {
 
         urlsToSend.push(url);
       } else {
-        const generatedNewUrl = alphanumericIncrement(urlsToSend[i - 1].url);
+        const generatedNewUrl = UnicodeIncrement.incrementSystem(
+          urlsToSend[i - 1].url
+        );
         const url: IUrl = {
           destiny: addHttps(allUrls[i]),
           url: `${generatedNewUrl}`,

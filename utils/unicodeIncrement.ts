@@ -5,7 +5,7 @@ interface IScope {
   end: number;
 }
 
-export class incrementAlphanumeric {
+export class UnicodeIncrement {
   private static scopes: IScope[] = [
     {
       //0-9
