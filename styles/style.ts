@@ -1,8 +1,15 @@
 import styled from "styled-components";
 
+/* -------------------------------------------------------------------------- */
+/*                                  Functions                                 */
+/* -------------------------------------------------------------------------- */
 export function rem(px: number): string {
   return `${px / 16}rem`;
 }
+
+/* -------------------------------------------------------------------------- */
+/*                    Sizes, fonts, and colors definitions                    */
+/* -------------------------------------------------------------------------- */
 
 export const textColor1 = `rgb(178, 186, 194)`;
 export const textColor2 = `rgb(255, 255, 255)`;
@@ -12,6 +19,10 @@ export const errorColor1 = `#f44336`;
 export const fontSize1 = rem(14);
 export const fontSize2 = rem(23);
 export const fontSize3 = rem(34);
+
+/* -------------------------------------------------------------------------- */
+/*                                 Interfaces                                 */
+/* -------------------------------------------------------------------------- */
 interface Props {
   position?: string;
   top?: string;
@@ -22,6 +33,16 @@ interface Props {
 interface IStyle {
   highlight: boolean;
 }
+
+interface ITitle {
+  size?: string;
+  color?: string;
+  align?: string;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                 Components                                 */
+/* -------------------------------------------------------------------------- */
 
 export const StaticContainer = styled.header<Props>`
   position: ${(props) => props.position || "block"};
@@ -66,4 +87,10 @@ export const Button = styled.button<IStyle>`
   font-weight: bold;
   transition: 0.3s;
   margin: 10px 0;
+`;
+
+export const Title = styled.h1<ITitle>`
+  text-align: ${(props) => (props.align ? `${props.align}` : "center")};
+  ${(props) => (props.size ? `font-size: ${props.size}` : "")};
+  ${(props) => (props.color ? `color: ${props.color}` : "")};
 `;

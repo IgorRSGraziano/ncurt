@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { rem } from "styles/style";
+import { rem, Title } from "styles/style";
 
 import { A } from "pages";
 
@@ -10,14 +10,6 @@ import type { IUser } from "interfaces/User";
 import prisma from "services/prisma";
 
 import { useRouter } from "next/router";
-
-const Title = styled.h1`
-  font-size: ${rem(50)};
-`;
-
-const Title2 = styled.h1`
-  font-size: ${rem(25)};
-`;
 
 const LoginForm = styled.div`
   display: flex;
@@ -173,7 +165,7 @@ const Account: React.FC<IAccount> = ({ user }) => {
     <Main>
       <>
         <LoginForm>
-          <Title>Bem Vindo, {user.name}</Title>
+          <Title size={rem(50)}>Bem Vindo, {user.name}</Title>
           {selecao ? (
             <Button1 onClick={() => setSelecao(true)}>URL's Geradas</Button1>
           ) : (
@@ -218,7 +210,7 @@ const Account: React.FC<IAccount> = ({ user }) => {
           ) : (
             <Selecao>
               <LoginForm2>
-                <Title2>Seus Dados</Title2>
+                <Title size={rem(25)}>Seus Dados</Title>
 
                 <InputField>
                   <Label htmlFor="senha">Nome</Label>

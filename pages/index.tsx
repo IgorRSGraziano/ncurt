@@ -7,7 +7,7 @@ import { sessionOptions } from "utils/session";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight, faCopy } from "@fortawesome/free-solid-svg-icons";
 
-import { textColor2, rem, errorColor1 } from "styles/style";
+import { textColor2, rem, errorColor1, Title } from "styles/style";
 
 import type { IUrl, IResponseUrls } from "interfaces/URL";
 import type { IconProp } from "@fortawesome/fontawesome-svg-core";
@@ -99,10 +99,6 @@ const BtnGerarURL = styled.button<IUrlValid>`
 const Small = styled.small`
   color: rgba(255, 255, 255, 0.5);
   margin-bottom: 3px;
-`;
-
-const H1 = styled.h1`
-  text-align: center;
 `;
 
 const ReturnMessage = styled.small`
@@ -275,7 +271,7 @@ const Home: React.FC<IHome> = ({ user }) => {
 
   return (
     <HomeStyle>
-      <H1>nCurt, o seu encurtador de URL's</H1>
+      <Title>Encurte URL's de forma simples.</Title>
 
       <CollumAlign>
         <p>

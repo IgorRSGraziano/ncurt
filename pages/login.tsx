@@ -1,15 +1,11 @@
 import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
-import { rem, Button } from "styles/style";
+import { rem, Button, Title } from "styles/style";
 import { Error } from "pages";
 import type { IUser } from "interfaces/User";
 import { withIronSessionSsr } from "iron-session/next";
 import { sessionOptions } from "utils/session";
-
-const Title = styled.h1`
-  font-size: ${rem(50)};
-`;
 
 const LoginForm = styled.div`
   display: flex;
@@ -107,7 +103,7 @@ function login() {
   return (
     <main>
       <LoginForm>
-        <Title>{isSignup ? "Logar" : "Crie sua conta."}</Title>
+        <Title size={rem(50)}>{isSignup ? "Logar" : "Crie sua conta."}</Title>
         {!isSignup && (
           <InputField>
             <Label htmlFor="senha">Nome</Label>
