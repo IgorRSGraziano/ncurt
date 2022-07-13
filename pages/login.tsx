@@ -1,11 +1,22 @@
+//Libs
 import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
+import { withIronSessionSsr } from "iron-session/next";
+
+//Interfaces
+import type { IUser } from "interfaces/User";
+
+//Styles
 import { rem, Button, Title } from "styles/style";
 import { Error } from "pages";
-import type { IUser } from "interfaces/User";
-import { withIronSessionSsr } from "iron-session/next";
+
+//Others
 import { sessionOptions } from "utils/session";
+
+/* -------------------------------------------------------------------------- */
+/*                              Styled Components                             */
+/* -------------------------------------------------------------------------- */
 
 const LoginForm = styled.div`
   display: flex;
@@ -40,6 +51,10 @@ const InputField = styled.div`
   margin: 10px 0;
 `;
 
+/* -------------------------------------------------------------------------- */
+/*                                     SSR                                    */
+/* -------------------------------------------------------------------------- */
+
 export const getServerSideProps = withIronSessionSsr(async ({ req, res }) => {
   const user: IUser = req.session.user;
 
@@ -58,7 +73,7 @@ export const getServerSideProps = withIronSessionSsr(async ({ req, res }) => {
   }
 }, sessionOptions);
 
-function login() {
+export const Login: React.FC = () => {
   const [isSignup, setIsSignup] = React.useState<Boolean>(false);
 
   const [status, setStatus] = React.useState<string>("");
@@ -129,6 +144,4 @@ function login() {
       </LoginForm>
     </main>
   );
-}
-
-export default login;
+};

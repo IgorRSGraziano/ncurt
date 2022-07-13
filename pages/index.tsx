@@ -1,21 +1,46 @@
-import Head from "next/head";
+//Libs
 import React from "react";
 import styled from "styled-components";
 import { withIronSessionSsr } from "iron-session/next";
-import { sessionOptions } from "utils/session";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight, faCopy } from "@fortawesome/free-solid-svg-icons";
 
-import { textColor2, rem, errorColor1, Title } from "styles/style";
-
-import type { IUrl, IResponseUrls } from "interfaces/URL";
+//Interfaces
+import type { IResponseUrls } from "interfaces/URL";
 import type { IconProp } from "@fortawesome/fontawesome-svg-core";
 import type { IUser } from "interfaces/User";
 
+//Styles
+import { textColor2, rem, errorColor1, Title } from "styles/style";
+
+//Others
+import { sessionOptions } from "utils/session";
+import Input from "components/Input";
+
+/* -------------------------------------------------------------------------- */
+/*                                 Interfaces                                 */
+/* -------------------------------------------------------------------------- */
 interface IUrlValid {
   isInvalid?: boolean;
 }
+
+interface IHome {
+  user: IUser;
+}
+
+interface IDestinyStatus {
+  generated: boolean;
+  response?: IResponseUrls;
+}
+
+interface IUrlValidFormat {
+  isValid: boolean;
+  error?: string;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                              Styled Components                             */
+/* -------------------------------------------------------------------------- */
 const URLInput = styled.input<IUrlValid>`
   max-width: 500px;
   position: relative;
@@ -140,13 +165,9 @@ const CopyBtn = styled.button`
   }
 `;
 
-interface IBr {
-  height: number;
-}
-
-const Br = styled.div<IBr>`
-  height: ${(props) => props.height}PX;
-`;
+/* -------------------------------------------------------------------------- */
+/*                                     SSR                                    */
+/* -------------------------------------------------------------------------- */
 
 export const getServerSideProps = withIronSessionSsr(async ({ req, res }) => {
   const user: IUser = req.session.user;
@@ -166,22 +187,11 @@ export const getServerSideProps = withIronSessionSsr(async ({ req, res }) => {
   }
 }, sessionOptions);
 
-interface IDestinyStatus {
-  generated: boolean;
-  response?: IResponseUrls;
-}
-
-interface IUrlValidFormat {
-  isValid: boolean;
-  error?: string;
-}
-
-interface IHome {
-  user: IUser;
-}
+/* -------------------------------------------------------------------------- */
+/*                                  Component                                 */
+/* -------------------------------------------------------------------------- */
 
 const Home: React.FC<IHome> = ({ user }) => {
-  console.log(user);
   //Status from default URL generate
   const [status, setStatus] = React.useState<IDestinyStatus>({
     generated: false,
@@ -194,8 +204,8 @@ const Home: React.FC<IHome> = ({ user }) => {
   //Verify destiny from shorted url
   const [destinyStatus, setDestinyStatus] = React.useState<string>(null);
 
-  const defaultUrl = React.useRef(null);
-  const destinyUrl = React.useRef(null);
+  const defaultUrl: React.MutableRefObject<any> = React.useRef(null);
+  const destinyUrl: React.MutableRefObject<any> = React.createRef();
 
   const generateUrl = async (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -327,15 +337,13 @@ const Home: React.FC<IHome> = ({ user }) => {
         <p>
           <label htmlFor="urlVerify">Deseja saber aonde uma URL leva?</label>
         </p>
-        <InputContainer>
-          <URLInput
-            type={"text"}
-            placeholder="https://www.site.com.br"
-            id="urlVerify"
-            ref={destinyUrl}
-          />
-          <BtnGerarURL onClick={verifyUrl}>Verificar</BtnGerarURL>
-        </InputContainer>
+        <Input
+          id="urlVerify"
+          placeholder="https://www.site.com.br"
+          ref={destinyUrl}
+          buttonName="Verificar"
+          buttonAction={verifyUrl}
+        />
         <ReturnMessage>{destinyStatus}</ReturnMessage>
       </CollumAlign>
     </HomeStyle>
