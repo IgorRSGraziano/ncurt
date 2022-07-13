@@ -1,10 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { textColor2, rem, errorColor1, Title } from "styles/style";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { IconProp } from "@fortawesome/fontawesome-svg-core";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
-import Link from "next/link";
 
 const InputContainer = styled.div`
   display: flex;
@@ -18,7 +14,7 @@ interface IUrlValid {
   isInvalid?: boolean;
 }
 
-const BtnGerarURL = styled.button<IUrlValid>`
+const Button = styled.button<IUrlValid>`
   border: 1px solid rgb(38, 93, 151);
   border-left: 0px;
   height: 100%;
@@ -37,7 +33,7 @@ const BtnGerarURL = styled.button<IUrlValid>`
   }
 `;
 
-const URLInput = styled.input<IUrlValid>`
+const TextInput = styled.input<IUrlValid>`
   max-width: 500px;
   position: relative;
   width: 100%;
@@ -100,7 +96,7 @@ const Input = React.forwardRef(
     return (
       <>
         <InputContainer>
-          <URLInput
+          <TextInput
             type={"text"}
             placeholder={placeholder}
             id={id}
@@ -108,12 +104,12 @@ const Input = React.forwardRef(
             ref={ref}
             onChange={() => (onChange ? onChange() : null)}
           />
-          <BtnGerarURL
+          <Button
             isInvalid={disabled}
             onClick={(e) => (buttonAction ? buttonAction(e) : null)}
           >
             {buttonName}
-          </BtnGerarURL>
+          </Button>
         </InputContainer>
       </>
     );

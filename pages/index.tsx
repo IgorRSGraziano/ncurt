@@ -11,7 +11,7 @@ import type { IconProp } from "@fortawesome/fontawesome-svg-core";
 import type { IUser } from "interfaces/User";
 
 //Styles
-import { textColor2, rem, errorColor1, Title } from "styles/style";
+import { textColor2, rem, Title } from "styles/style";
 
 //Others
 import { sessionOptions } from "utils/session";
@@ -20,10 +20,6 @@ import Input from "components/Input";
 /* -------------------------------------------------------------------------- */
 /*                                 Interfaces                                 */
 /* -------------------------------------------------------------------------- */
-interface IUrlValid {
-  isInvalid?: boolean;
-}
-
 interface IHome {
   user: IUser;
 }
@@ -41,42 +37,6 @@ interface IUrlValidFormat {
 /* -------------------------------------------------------------------------- */
 /*                              Styled Components                             */
 /* -------------------------------------------------------------------------- */
-const URLInput = styled.input<IUrlValid>`
-  max-width: 500px;
-  position: relative;
-  width: 100%;
-  height: 100%;
-  border-radius: 5px;
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-  background-color: rgb(19, 47, 76);
-  border: 1px solid
-    ${(props) => (props.isInvalid ? errorColor1 : "rgb(38, 93, 151)")};
-  color: rgb(178, 186, 194);
-  text-align: center;
-  font-size: ${rem(17)};
-  transition: 0.3s;
-
-  &:hover {
-    border-color: ${(props) =>
-      props.isInvalid ? errorColor1 : "rgb(51, 153, 255)"};
-    background-color: rgb(23, 58, 94);
-    transition: 0.3s;
-  }
-
-  &:focus {
-    border-color: ${(props) =>
-      props.isInvalid ? errorColor1 : "rgb(38, 93, 151)"};
-    background-color: rgb(23, 58, 94);
-    transition: 0.3s;
-    outline: none;
-    color: ${textColor2};
-  }
-
-  &:focus-within {
-    color: ${textColor2};
-  }
-`;
 
 const CollumAlign = styled.div`
   display: flex;
@@ -92,33 +52,6 @@ const HomeStyle = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 10px;
-`;
-
-const InputContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 40px;
-`;
-
-const BtnGerarURL = styled.button<IUrlValid>`
-  border: 1px solid rgb(38, 93, 151);
-  border-left: 0px;
-  height: 100%;
-  background-color: rgb(0, 127, 255);
-  color: ${textColor2};
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: 0.3s;
-  ${(props) => (props.isInvalid ? "filter: contrast(0.5);" : "")}
-
-  &:hover {
-    background-color: #0059b2;
-    transition: 0.3s;
-  }
 `;
 
 const Small = styled.small`
@@ -138,12 +71,6 @@ export const A = styled.a`
   color: ${textColor2};
   margin-bottom: 30px;
   cursor: pointer;
-`;
-
-export const Error = styled(Small)`
-  color: ${errorColor1} !important;
-  font-weight: bold;
-  display: block;
 `;
 
 const CopyBtn = styled.button`
@@ -287,23 +214,16 @@ const Home: React.FC<IHome> = ({ user }) => {
         <p>
           <label htmlFor="url">Digite a URL que deseja encurtar.</label>
         </p>
-        <InputContainer>
-          <URLInput
-            type={"text"}
-            placeholder="https://www.site.com.br"
-            id="url"
-            isInvalid={!urlValidFormat.isValid}
-            ref={defaultUrl}
-            onChange={verifyUrlFormat}
-          />
-          <BtnGerarURL
-            isInvalid={!urlValidFormat.isValid}
-            onClick={(e) => urlValidFormat.isValid && generateUrl(e)}
-          >
-            Gerar
-          </BtnGerarURL>
-        </InputContainer>
-        {!urlValidFormat.isValid && <Error>{urlValidFormat.error}</Error>}
+        <Input
+          id="url"
+          placeholder="https://www.site.com.br"
+          buttonAction={generateUrl}
+          disabled={!urlValidFormat.isValid}
+          buttonName={"Gerar"}
+          errorMessage={urlValidFormat.error}
+          onChange={verifyUrlFormat}
+          ref={defaultUrl}
+        />
         <Small>
           Você pode enviar uma lista de URL's passando um ";" entre elas
         </Small>
@@ -333,7 +253,6 @@ const Home: React.FC<IHome> = ({ user }) => {
           ) : (
             <ReturnMessage>Algo de errado não deu certo...</ReturnMessage>
           ))}
-
         <p>
           <label htmlFor="urlVerify">Deseja saber aonde uma URL leva?</label>
         </p>
