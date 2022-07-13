@@ -11,7 +11,7 @@ import type { IconProp } from "@fortawesome/fontawesome-svg-core";
 import type { IUser } from "interfaces/User";
 
 //Styles
-import { textColor2, rem, Title } from "styles/style";
+import { textColor2, rem, Title, Small } from "styles/style";
 
 //Others
 import { sessionOptions } from "utils/session";
@@ -52,11 +52,6 @@ const HomeStyle = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 10px;
-`;
-
-const Small = styled.small`
-  color: rgba(255, 255, 255, 0.5);
-  margin-bottom: 3px;
 `;
 
 const ReturnMessage = styled.small`
@@ -195,13 +190,12 @@ const Home: React.FC<IHome> = ({ user }) => {
       /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/gi;
 
     const isValid = urls.every((url) => url.match(urlRegex));
-
     if (isValid) {
       setUrlValidFormat({ isValid: true });
     } else {
       setUrlValidFormat({
         isValid: false,
-        error: "Parece que essa URL é invalida...",
+        error: "Insira uma URL válida!",
       });
     }
   };

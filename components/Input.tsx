@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { textColor2, rem, errorColor1, Title } from "styles/style";
+import { textColor2, rem, errorColor1, Small } from "styles/style";
 
 const InputContainer = styled.div`
   display: flex;
@@ -70,6 +70,12 @@ const TextInput = styled.input<IUrlValid>`
   }
 `;
 
+export const Error = styled(Small)`
+  color: ${errorColor1} !important;
+  font-weight: bold;
+  display: block;
+`;
+
 interface IProps {
   placeholder: string;
   id: string;
@@ -111,6 +117,7 @@ const Input = React.forwardRef(
             {buttonName}
           </Button>
         </InputContainer>
+        {!!errorMessage && <Error>{errorMessage}</Error>}
       </>
     );
   }

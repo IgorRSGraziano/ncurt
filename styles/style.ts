@@ -94,3 +94,8 @@ export const Title = styled.h1<ITitle>`
   ${(props) => (props.size ? `font-size: ${props.size}` : "")};
   ${(props) => (props.color ? `color: ${props.color}` : "")};
 `;
+
+export const Small = styled.small`
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 3px;
+`;
