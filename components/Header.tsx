@@ -3,20 +3,6 @@ import styled from "styled-components";
 import { StaticContainer, Content, textColor2, fontSize2 } from "styles/style";
 import Link from "next/link";
 
-const LoginArea = styled.a`
-	display: flex;
-	align-items: center;
-	gap: 20px;
-	flex-wrap: nowrap;
-	transition: 0.3s;
-	cursor: pointer;
-
-	&:hover {
-		transition: 0.3s;
-		color: ${textColor2};
-	}
-`;
-
 const Brand = styled.div`
 	font-size: ${fontSize2};
 	font-weight: bold;
@@ -28,16 +14,12 @@ const Brand = styled.div`
 	}
 `;
 
-const isLogged = true;
-
 function Header() {
 	return (
 		<StaticContainer position="sticky" top="0">
 			<Content justifyContentf="space-between">
 				<Link href={"/"}>
-					<a>
-						<Brand>nCurt</Brand>
-					</a>
+					<Brand>nCurt</Brand>
 				</Link>
 			</Content>
 		</StaticContainer>
