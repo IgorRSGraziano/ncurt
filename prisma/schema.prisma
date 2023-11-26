@@ -16,17 +16,4 @@ model Urls {
   expireAt DateTime?
   authorId String?
   number   Int       @default(autoincrement())
-  author   User?     @relation(fields: [authorId], references: [id])
-}
-
-model User {
-  id        String   @id @default(cuid())
-  name      String?
-  email     String   @unique
-  password  String
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-  urls      Urls[]
-
-  @@map("users")
 }
