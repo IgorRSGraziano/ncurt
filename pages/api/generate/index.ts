@@ -3,8 +3,6 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 import prisma from "services/prisma";
 import { UnicodeIncrement } from "utils/unicodeIncrement";
-import { withIronSessionApiRoute } from "iron-session/next";
-import { sessionOptions } from "utils/session";
 
 async function generateURL(req: NextApiRequest, res: NextApiResponse) {
 	const { destiny } = req.body;
@@ -69,4 +67,4 @@ async function generateURL(req: NextApiRequest, res: NextApiResponse) {
 	}
 }
 
-export default withIronSessionApiRoute(generateURL, sessionOptions);
+export default generateURL;

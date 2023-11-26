@@ -12,7 +12,6 @@ import type { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { textColor2, rem, Title, Small } from "styles/style";
 
 //Others
-import { sessionOptions } from "utils/session";
 import Input from "components/Input";
 
 /* -------------------------------------------------------------------------- */

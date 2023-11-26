@@ -3,17 +3,14 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
 model Urls {
-  id       String    @id @default(cuid())
+  id       Int       @id @default(autoincrement())
   url      String    @unique
-  count    Int       @default(0)
   destiny  String
   createAt DateTime  @default(now())
   expireAt DateTime?
-  authorId String?
-  number   Int       @default(autoincrement())
 }
