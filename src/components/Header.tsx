@@ -1,6 +1,7 @@
+"use client";
 import React from "react";
 import styled from "styled-components";
-import { StaticContainer, Content, textColor2, fontSize2 } from "styles/style";
+import { StaticContainer, Content, textColor2, fontSize2 } from "src/styles/style";
 import Link from "next/link";
 
 const Brand = styled.div`

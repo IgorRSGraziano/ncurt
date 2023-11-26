@@ -1,3 +1,4 @@
+"use client";
 //Libs
 import React from "react";
 import styled from "styled-components";
@@ -5,14 +6,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight, faCopy } from "@fortawesome/free-solid-svg-icons";
 
 //Interfaces
-import type { IResponseUrls } from "interfaces/URL";
+import type { IResponseUrls } from "src/interfaces/URL";
 import type { IconProp } from "@fortawesome/fontawesome-svg-core";
 
 //Styles
-import { textColor2, rem, Title, Small } from "styles/style";
+import { textColor2, rem, Title, Small } from "src/styles/style";
 
 //Others
-import Input from "components/Input";
+import Input from "src/components/Input";
 
 /* -------------------------------------------------------------------------- */
 /*                                 Interfaces                                 */

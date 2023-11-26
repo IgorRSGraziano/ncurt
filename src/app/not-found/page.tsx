@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { rem, Title } from "styles/style";
-import { textColor2 } from "styles/style";
+import { rem, Title } from "src/styles/style";
+import { textColor2 } from "src/styles/style";
 
 const NotFoundContainer = styled.main`
   display: block;

@@ -1,6 +1,6 @@
 import React from "react";
 import { GetServerSideProps } from "next";
-import prisma from "services/prisma";
+import prisma from "src/services/prisma";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   try {

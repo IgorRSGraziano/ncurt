@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { textColor2, rem, errorColor1, Small } from "styles/style";
+import { textColor2, rem, errorColor1, Small } from "src/styles/style";
 
 const InputContainer = styled.div`
   display: flex;

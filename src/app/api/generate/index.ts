@@ -1,8 +1,8 @@
-import type { IUrl, IResponseUrls } from "interfaces/URL";
+import type { IUrl, IResponseUrls } from "src/interfaces/URL";
 import type { NextApiRequest, NextApiResponse } from "next";
 
-import prisma from "services/prisma";
-import { UnicodeIncrement } from "utils/unicodeIncrement";
+import prisma from "src/services/prisma";
+import { UnicodeIncrement } from "src/utils/unicodeIncrement";
 
 async function generateURL(req: NextApiRequest, res: NextApiResponse) {
 	const { destiny } = req.body;
