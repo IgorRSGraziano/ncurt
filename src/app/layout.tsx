@@ -3,6 +3,7 @@ import "./globals.css";
 
 import { Inter as FontSans } from "next/font/google";
 
+import Header from "@/components/header";
 import { cn } from "@/lib/utils";
 
 const fontSans = FontSans({
@@ -22,7 +23,10 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en" suppressHydrationWarning>
-			<body className={cn("min-h-screen bg-background font-sans antialiased", fontSans.variable)}>{children}</body>
+			<body className={cn("min-h-screen bg-background font-sans antialiased", fontSans.variable)}>
+				<Header />
+				{children}
+			</body>
 		</html>
 	);
 }
