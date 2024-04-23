@@ -9,7 +9,7 @@ export default function Home() {
 			<div className="mt-12">
 				<p className="text-center mb-4 text-xl">Digite a URL que deseja encurtar</p>
 				<div className="flex gap-2 items-center justify-center">
-					<Input type="text" placeholder="https://site.com" className="w-full rounded-lg bg-background pr-8 md:w-[200px] lg:w-[500px]" />
+					<Input type="text" placeholder="https://meusite.com.br" className="w-full rounded-lg transition-all bg-background pr-8 md:w-[200px] lg:w-[500px] text-center" />
 					<Button variant={"default"} className="flex items-center gap-2">
 						<p>Gerar</p>
 						<WandSparkles className="h-4 w-4" />
@@ -21,9 +21,9 @@ export default function Home() {
 			<div className="my-12">
 				<p className="text-center mb-4 text-xl">Deseja saber aonde uma URL leva?</p>
 				<div className="flex gap-2 items-center justify-center">
-					<Input type="text" placeholder="https://site.com" className="w-full rounded-lg bg-background pr-8 md:w-[200px] lg:w-[500px]" />
+					<Input type="text" placeholder="https://meusite.com.br" className="w-full rounded-lg transition-all bg-background pr-8 md:w-[200px] lg:w-[500px] text-center" />
 					<Button variant={"default"} className="flex items-center gap-2">
-						<p>Gerar</p>
+						<p>Buscar</p>
 						<Search className="h-4 w-4" />
 					</Button>
 				</div>

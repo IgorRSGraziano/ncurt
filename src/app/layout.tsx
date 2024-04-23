@@ -3,6 +3,7 @@ import "./globals.css";
 
 import { Inter as FontSans } from "next/font/google";
 
+import Footer from "@/components/footer";
 import Header from "@/components/header";
 import ThemeSelector from "@/components/themeSelector";
 import { Card } from "@/components/ui/card";
@@ -29,10 +30,11 @@ export default function RootLayout({
 			<ThemeProvider attribute="class" defaultTheme="dark">
 				<body className={cn("min-h-screen bg-background font-sans antialiased", fontSans.variable)}>
 					<Header />
-					<Card className="container p-4">{children}</Card>
-					<div className="fixed bottom-6 right-6">
+					<Card className="container p-4 min-h-[80vh]">{children}</Card>
+					<div className="fixed bottom-6 right-6 z-[60]">
 						<ThemeSelector />
 					</div>
+          <Footer />
 				</body>
 			</ThemeProvider>
 		</html>

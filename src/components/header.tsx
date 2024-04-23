@@ -9,9 +9,9 @@ function Header({}: Props) {
 			<div className="container flex justify-between items-center">
 				<div className="mr-4 flex">
 					<Link href={"/"} className="mr-6 flex items-center space-x-2">
-						<span className="hidden font-bold sm:inline-block">nCurt</span>
+						<span className="hidden font-bold sm:inline-block text-xl">nCurt</span>
 					</Link>
-					<nav className="flex items-center gap-4 text-sm lg:gap-6">
+					<nav className="flex items-center gap-4 text-md lg:gap-6">
 						<Link href={"/"} className="transition-colors hover:text-foreground/80 text-foreground/60">
 							Home
 						</Link>
