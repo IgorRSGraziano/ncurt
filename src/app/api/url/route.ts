@@ -1,11 +1,7 @@
 import prisma from "@/services/prismaService";
 import { UnicodeIncrement } from "@/utils/unincrement";
+import { Urls } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
-
-export async function GET(req: NextRequest) {
-	const allUrls = await prisma.urls.findMany();
-	return NextResponse.json({ data: allUrls });
-}
 
 export async function POST(req: NextRequest) {
 	const { urls } = await req.json();
@@ -19,17 +15,23 @@ export async function POST(req: NextRequest) {
 		},
 	});
 
+	function addHttps(url: string): string {
+		return url.replace(/^(?:http[s]?:\/\/)?([\S]+)/gi, "https://$1");
+	}
+
 	let lastGenerated = lastUrl?.url ?? "a";
+	const generatedUrls: Urls[] = [];
 	for (const url of urls) {
 		const shortUrl = UnicodeIncrement.incrementSystem(lastGenerated);
-		await prisma.urls.create({
+		const generated = await prisma.urls.create({
 			data: {
-				destiny: url,
+				destiny: addHttps(url),
 				url: shortUrl,
 			},
 		});
+		generatedUrls.push(generated);
 		lastGenerated = shortUrl;
 	}
 
-	return NextResponse.json({ success: true, message: "URL's encurtadas com sucesso" });
+	return NextResponse.json({ success: true, message: "URL's encurtadas com sucesso", data: generatedUrls });
 }
