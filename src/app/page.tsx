@@ -117,7 +117,7 @@ export default function Home() {
 
 	return (
 		<div>
-			<h1 className="text-3xl text-center font-bold">Encurte URL's de forma simples.</h1>
+			<h1 className="text-3xl text-center font-bold">Encurte URL&apos;s de forma simples.</h1>
 			<div className="mt-12">
 				<p className="text-center mb-4 mt-4 text-xl">Digite a URL que deseja encurtar</p>
 				<div className="flex gap-2 items-center justify-center">
@@ -127,7 +127,7 @@ export default function Home() {
 						<WandSparkles className="h-4 w-4" />
 					</Button>
 				</div>
-				<p className="text-center mb-2 text-muted-foreground text-sm mt-2">Você pode enviar uma lista de URL's passando um ";" entre elas</p>
+				<p className="text-center mb-2 text-muted-foreground text-sm mt-2">Você pode enviar uma lista de URL&apos;s passando um &quot;;&quot; entre elas</p>
 				{generateStatus && <p className={`text-center ${generateStatus.success ? "text-green-500" : "text-red-500"} mt-2 mb-2`}>{generateStatus.message}</p>}
 				{generateStatus?.success && (
 					<div className="flex flex-col gap-2 mt-4">
