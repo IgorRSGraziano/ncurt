@@ -26,13 +26,17 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="en" suppressHydrationWarning>
+		<html lang="pt-BR" suppressHydrationWarning>
 			<ThemeProvider attribute="class" defaultTheme="dark">
-				<body className={cn("min-h-screen bg-background font-sans antialiased", fontSans.variable)}>
+				<body className={cn("min-h-screen flex flex-col bg-background font-sans antialiased", fontSans.variable)}>
 					<Header />
-					<Card className="container p-4 min-h-[80vh]">{children}</Card>
-					<div className="fixed bottom-6 right-6 z-[60]">
-						<ThemeSelector />
+					<div className="flex-grow">
+						<div className="m-2">
+							<Card className="container p-4 min-h-[80vh]">{children}</Card>
+						</div>
+						<div className="fixed bottom-6 right-6 z-[60]">
+							<ThemeSelector />
+						</div>
 					</div>
 					<Footer />
 				</body>
