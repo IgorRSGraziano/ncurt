@@ -7,7 +7,6 @@ type Params = {
 	};
 };
 export async function GET(_: NextRequest, { params: { path } }: Params) {
-	console.log(path);
 	if (!path) return NextResponse.json({ success: false, message: "Digite uma URL" }, { status: 400 });
 
 	const url = await prisma.urls.findFirst({
