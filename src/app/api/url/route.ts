@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
 		return url.replace(/^(?:http[s]?:\/\/)?([\S]+)/gi, "https://$1");
 	}
 
-	let lastGenerated = lastUrl?.url ?? "a";
+	let lastGenerated = lastUrl?.url ?? "0";
 	const generatedUrls: Urls[] = [];
 	for (const url of urls) {
 		const shortUrl = UnicodeIncrement.incrementSystem(lastGenerated);
